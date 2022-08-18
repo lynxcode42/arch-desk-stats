@@ -27,12 +27,17 @@ echo -e "\n
 free -h 
 echo -e "\n
 ================================================================================
->>>> du -sh <<<<
+>>>> df -BM <<<<
 "
-sudo du -sh  /usr /var /opt /boot /home
+df -BM /
 echo -e "\n
 ================================================================================
->>>> pacman -Q >$INST <<<<
+>>>> du -s -BM <<<<
+"
+sudo du -s -BM  /usr /var /opt /boot /home /root
+echo -e "\n
+================================================================================
+>>>> pacman -Qi >$INST <<<<
 "
 LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Version/{ver=$3} /^Installed Size/{print name"_"ver, $4,$5}' | sort -h >$INST
 echo -e "#Installed packages: $(wc -l $INST)"
