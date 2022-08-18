@@ -13,34 +13,33 @@
 #-------------------------------------------------------------------------------
 
 BINDIR="$HOME/.local/bin"
-GITREPO="arch-desk-stats""
+GITREPO="arch-desk-stats"
 GITDIR="$HOME/$GITREPO"
 GITDIRTAG="187cf50f8f0619426e98835fdeaa4f3b3dd6a3471b2efc496f50d25ffe0e19db.TAG"
 
 echo -e "======================================================================="
 echo -e "01_setup_suckless.sh && XORG base"
 echo -e "======================================================================="
-echo -e "[_BEGIN_] >>> :" $(date "+%d>> %T <<") "\n"
+echo -e "[_BEGIN_] $(date +%d_%T) \n"
 
-
-echo -e "\n[ 00 ]==== check if git lynxcode42/$(GITREPO) exists =================="
+echo -e "\n[ 00 ]==== check if git lynxcode42/${GITREPO} exists =================="
 if [ -f "$GITDIR/$GITDIRTAG" ]; then
 	echo "... ok, git repo is in place.";
 else
-	echo "$(GITREPO) repo cloning ...";
+	echo "${GITREPO} repo cloning ...";
 	cd $HOME;
-	echo "git clone https://github.com/lynxcode42/$(GITREPO).git";
-	git clone https://github.com/lynxcode42/$(GITREPO).git;
+	echo "git clone https://github.com/lynxcode42/${GITREPO}.git";
+	git clone https://github.com/lynxcode42/${GITREPO}.git;
 fi
 
 echo -e "\n[ 01 ]==== replace bash profiles ===================================="
 cd $HOME
-mv -v .bashrc				$(GITDIR)/.bashrc-BAK
-mv -v .profile			$(GITDIR)/.profile-BAK
-mv -v .bash_profile	$(GITDIR)/.bash_profile-BAK
-mv -v $(GITDIR)/.bashrc				.bashrc				
-mv -v $(GITDIR)/.profile			.profile			
-mv -v $(GITDIR)/.bash_profile	.bash_profile	
+mv -v .bashrc				${GITDIR}/.bashrc-BAK
+mv -v .profile			${GITDIR}/.profile-BAK
+mv -v .bash_profile	${GITDIR}/.bash_profile-BAK
+mv -v ${GITDIR}/.bashrc				.bashrc				
+mv -v ${GITDIR}/.profile			.profile			
+mv -v ${GITDIR}/.bash_profile	.bash_profile	
 
 echo -e "\n[ 02 ]==== install xorg base ========================================"
 echo -e "sudo pacman -S xorg-server xorg-xinit"
@@ -74,7 +73,8 @@ yes | cp -pfv ${GITDIR}/suckless/dwm/dwm ${BINDIR}
 
 echo -e "\n-- copying xinitrc and and ask for needed modifications --"
 cp -v /etc/X11/xinit/xinitrc ~/.xinitrc
-echo -e "MANUALLY replace the lines which looks like 
+cat << EOF
+MANUALLY replace the lines which looks like 
 ###
 twm &
 xclock -geometry 50x50-1+1 &
@@ -89,10 +89,10 @@ with the following code for DWM
 xrandr -s 1680x1050
 exec ${BINDIR}/dwm
 ###
-"
+EOF
 
 echo -e "_______________________________________________________________________"
-echo -e "\n[_END___] <<< :" $(date "+%d>> %T <<")
+echo -e "[_END_] $(date +%d_%T)"
 echo -e "_______________________________________________________________________"
 echo -e "\n\nFinished all setups. Please make a clean REBOOT before usage."
 echo -e "Have fun. cya.\n\n"
