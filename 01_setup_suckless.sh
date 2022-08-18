@@ -37,9 +37,9 @@ cd $HOME
 mv -v .bashrc				${GITDIR}/.bashrc-BAK
 mv -v .profile			${GITDIR}/.profile-BAK
 mv -v .bash_profile	${GITDIR}/.bash_profile-BAK
-mv -v ${GITDIR}/.bashrc				.bashrc				
-mv -v ${GITDIR}/.profile			.profile			
-mv -v ${GITDIR}/.bash_profile	.bash_profile	
+cp -v ${GITDIR}/.bashrc				.bashrc				
+cp -v ${GITDIR}/.profile			.profile			
+cp -v ${GITDIR}/.bash_profile	.bash_profile	
 
 echo -e "\n[ 02 ]==== install xorg base ========================================"
 echo -e "sudo pacman -S xorg-server xorg-xinit"
